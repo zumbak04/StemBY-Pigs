@@ -6,6 +6,7 @@ using UnityEngine;
 public class ParallelogramGrid : MonoBehaviour
 {
     #region Public Fields
+    public static ParallelogramGrid instance = null;
     public float gridSize = 10;
     public float cellTopAndBottomSide = 2;
     public float cellSides = 3;
@@ -21,12 +22,26 @@ public class ParallelogramGrid : MonoBehaviour
     {
         get => Quaternion.AngleAxis(cellAngle, Vector3.back);
     }
-    private Vector3 GridStart
+    public Vector3 GridStart
     {
         get => gameObject.transform.position;
     }
     #endregion
 
+    #region Public Methods
+    public Vector3 CellToWorld(Vector3 cellPosition)
+    {
+        Vector3 worldPosition = Rotation * Vector3.up * cellSides * cellPosition.x + GridStart + Vector3.right * cellTopAndBottomSide * cellPosition.y;
+
+        return worldPosition;
+    }
+    #endregion
+
+    #region Private Methods
+    private void Awake()
+    {
+        instance = this;
+    }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.white;
@@ -39,11 +54,5 @@ public class ParallelogramGrid : MonoBehaviour
 
         Gizmos.DrawSphere(CellToWorld(new Vector3(2,3,0)), 0.1f);
     }
-
-    public Vector3 CellToWorld(Vector3 cellPosition)
-    {
-        Vector3 worldPosition = Rotation * Vector3.up * cellSides * cellPosition.x + GridStart + Vector3.right * cellTopAndBottomSide * cellPosition.y;
-
-        return worldPosition;
-    }
+    #endregion
 }
