@@ -11,6 +11,7 @@ public abstract class Moving : MonoBehaviour
     private ParallelogramGrid grid;
     private bool isMoving = false;
     private Collider2D collider;
+    private Animator animator;
 
     public void AttempMoveBy(int x, int y)
     {
@@ -24,6 +25,8 @@ public abstract class Moving : MonoBehaviour
 
         if(CanMove(newPosition))
         {
+            animator.SetInteger("Vertical", x);
+            animator.SetInteger("Horizontal", y);
             MoveTo(newPosition);
         }
     }
@@ -40,7 +43,7 @@ public abstract class Moving : MonoBehaviour
         grid = ParallelogramGrid.instance;
         CellPosition = grid.GridStart;
         collider = GetComponent<Collider2D>();
-
+        animator = GetComponent<Animator>();
     }
     private void StopMoving()
     {
