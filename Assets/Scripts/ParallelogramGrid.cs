@@ -22,18 +22,19 @@ public class ParallelogramGrid : MonoBehaviour
     {
         get => Quaternion.AngleAxis(cellAngle, Vector3.back);
     }
-    public Vector3 GridStart
+    public Vector2 GridStart
     {
         get => gameObject.transform.position;
     }
     #endregion
 
     #region Public Methods
-    public Vector3 CellToWorld(Vector3 cellPosition)
+    public Vector2 CellToWorld(Vector2 cellPosition)
     {
-        Vector3 worldPosition = Rotation * Vector3.up * cellSides * cellPosition.x + GridStart + Vector3.right * cellTopAndBottomSide * cellPosition.y;
+        Vector2 worldPositionX = Rotation * Vector2.up * cellSides * cellPosition.x;
+        Vector2 worldPositionY = Vector2.right * cellTopAndBottomSide * cellPosition.y;
 
-        return worldPosition;
+        return worldPositionX + worldPositionY + GridStart;
     }
     #endregion
 
@@ -48,8 +49,8 @@ public class ParallelogramGrid : MonoBehaviour
 
         for (int i = 0; i <= gridSize; i++)
         {
-            Gizmos.DrawRay(GridStart + Rotation * Vector3.up * cellSides * i, Vector3.right * gridSize * cellTopAndBottomSide);
-            Gizmos.DrawRay(GridStart + Vector3.right * cellTopAndBottomSide * i, Rotation * Vector3.up * gridSize * cellSides);
+            Gizmos.DrawRay(GridStart + (Vector2)(Rotation * Vector2.up * cellSides * i), Vector2.right * gridSize * cellTopAndBottomSide);
+            Gizmos.DrawRay(GridStart + Vector2.right * cellTopAndBottomSide * i, Rotation * Vector2.up * gridSize * cellSides);
         }
 
         Gizmos.DrawSphere(CellToWorld(new Vector3(2,3,0)), 0.1f);

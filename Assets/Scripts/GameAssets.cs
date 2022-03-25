@@ -6,6 +6,7 @@ public class GameAssets : MonoBehaviour
 {
     public static GameAssets instance = null;
     public GameObject stone;
+    public Player player;
 
     void Awake()
     {

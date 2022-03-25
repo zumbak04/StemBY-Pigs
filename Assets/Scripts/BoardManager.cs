@@ -10,9 +10,14 @@ public class BoardManager : MonoBehaviour
 
     public Vector2 playerSpawn;
 
+    private ParallelogramGrid grid = ParallelogramGrid.instance;
+
     void Start()
     {
+        grid = ParallelogramGrid.instance;
+
         SpawnStones();
+        SpawnPlayer();
     }
     private void SpawnStones()
     {
@@ -23,13 +28,14 @@ public class BoardManager : MonoBehaviour
             {
                 spawnLocation.x = stoneOffset.x + i * stoneGap;
                 spawnLocation.y = stoneOffset.y + j * stoneGap;
-                spawnLocation = ParallelogramGrid.instance.CellToWorld(spawnLocation);
+                spawnLocation = grid.CellToWorld(spawnLocation);
                 Instantiate(GameAssets.instance.stone, spawnLocation, Quaternion.identity);
             }
         }
     }
     private void SpawnPlayer()
     {
-        Vector3 spawnLocation = Vector3.zero;
+        var player = Instantiate(GameAssets.instance.player, grid.CellToWorld(playerSpawn), Quaternion.identity);
+        player.MoveTo(playerSpawn);
     }
 }
