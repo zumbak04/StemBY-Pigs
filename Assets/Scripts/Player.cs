@@ -14,7 +14,7 @@ public class Player : Moving
 
         if (horizontal != 0 || vertical != 0)
         {
-            AttempMoveBy(vertical, horizontal);
+            TryMoveBy(vertical, horizontal);
         }
     }
 }

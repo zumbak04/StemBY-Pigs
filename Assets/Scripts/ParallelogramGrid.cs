@@ -7,7 +7,8 @@ public class ParallelogramGrid : MonoBehaviour
 {
     #region Public Fields
     public static ParallelogramGrid instance = null;
-    public float gridSize = 10;
+    public float gridXSize = 10;
+    public float gridYSize = 10;
     public float cellTopAndBottomSide = 2;
     public float cellSides = 3;
     public float cellAngle = 15;
@@ -47,10 +48,13 @@ public class ParallelogramGrid : MonoBehaviour
     {
         Gizmos.color = Color.white;
 
-        for (int i = 0; i <= gridSize; i++)
+        for (int i = 0; i <= gridXSize; i++)
         {
-            Gizmos.DrawRay(GridStart + (Vector2)(Rotation * Vector2.up * cellSides * i), Vector2.right * gridSize * cellTopAndBottomSide);
-            Gizmos.DrawRay(GridStart + Vector2.right * cellTopAndBottomSide * i, Rotation * Vector2.up * gridSize * cellSides);
+            Gizmos.DrawRay(GridStart + (Vector2)(Rotation * Vector2.up * cellSides * i), Vector2.right * gridYSize * cellTopAndBottomSide);
+        }
+        for (int i = 0; i <= gridYSize; i++)
+        {
+            Gizmos.DrawRay(GridStart + Vector2.right * cellTopAndBottomSide * i, Rotation * Vector2.up * gridXSize * cellSides);
         }
 
         Gizmos.DrawSphere(CellToWorld(new Vector3(2,3,0)), 0.1f);
